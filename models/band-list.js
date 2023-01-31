@@ -18,6 +18,7 @@ class BandList {
     }
 
     removeBand( id ) {
+        console.log("borrando",id)
         this.bands = this.bands.filter ( band => band.id !== id  )
     }
 
