@@ -20,27 +20,41 @@ class Server {
 
         this.io = socketio(this.server, { /** configuraciones */});
 
+        // Init sockets
+        this.sockects =  new Sockets ( this.io );
+
     }
 
     middlewares() {
         //Desplegar el directorio público
         this.app.use ( express.static( path.resolve (__dirname , '../public')));      
-        // Config CORS - vamos a permitir que se conecte cualquier persona pero podemos restringir desde cualquier dominio
-        this.app.use ( cors() );
 
+          // Config CORS - vamos a permitir que se conecte cualquier persona pero podemos restringir desde cualquier dominio
+          this.app.use ( cors() );
+
+
+        // get last tickets
+        this.app.use ( '/lastTickets', (req, res) =>{
+            res.json({
+                ok:true,
+                lastTickets: this.sockects.ticketList.last13
+            })
+        })
+
+
+      
     }
 
-    sockectsConfig() {
-        new Sockets ( this.io );
+    // sockectsConfig() {
+    //     new Sockets ( this.io );
 
 
-    }
+    // }
 
     execute () {
         // Init middleware
         this.middlewares();
-        // Init sockets
-        this.sockectsConfig();
+        
 
         // Init server
         this.server.listen(this.port , () => {

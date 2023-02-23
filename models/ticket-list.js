@@ -34,7 +34,7 @@ class TicketList {
         nextTicket.agent = agent;
         nextTicket.desk = desk;
 
-        this.assignedTickets.unshift( newTicket );
+        this.assignedTickets.unshift( nextTicket );
         return nextTicket;
     }
 
